@@ -9,3 +9,4 @@ To Team:
 4. After coding, push everything in yout HTML/JS root to github (excluding your IDE's project template/manifest files).
 
 We will do things this way so that you all may use the IDE of your choice and not worry about IDE manifests geting corrupt.
+This way you can also code in other languages taking advantage of features you are comfortable with without being restricted to an IDE that may not cater to your needs.
