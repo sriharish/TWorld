@@ -9,11 +9,9 @@ and open the template in the editor.
 */
 
 /**Canvas is set to 100% of Screen underneath all UI**/
-body {
-    margin: 0;
-}
 
 canvas {
     width: 100%;
     height: 100%;
+    z-index: 0;
 }

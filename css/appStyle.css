@@ -8,3 +8,36 @@ and open the template in the editor.
     Author     : The Gre8
 */
 
+body{
+     margin: 0;
+	 font-size: 20px;
+	 font-family: "Titillium Web", serif;
+}
+
+.trendContainer{
+    position: absolute;
+    top: 15vh;
+    left: 2vh;
+}
+.trendList{
+    position:absolute;
+    list-style:none;
+    z-index: 1;
+    padding: 0;
+}
+
+.trendList a:link, .trendList a:visited {
+    background-color: #103D50;
+    border: 1px inset rgba(197, 213, 224, 0.77);
+    width: 100%;
+    color: #e2f6fd;
+    padding: 0.75rem 0.75rem;
+    text-align: left;
+    text-wrap: avoid;	
+    text-decoration: none;
+    display: inline-block;
+}
+
+.trendList a:hover, .trendList a:active {
+    background-color: #022636;
+}
