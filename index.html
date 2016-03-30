@@ -59,6 +59,25 @@ box backgrounf light colour       light-gray              #656D78
 }
 
 
+.blue-form{
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #ffffff;
+    background-color: #116b9c;
+    background-image: none;
+    border: 1px solid #116b9c;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+
 .simplepadding{
   padding-top:5px;
   padding-right:30px;
@@ -100,17 +119,17 @@ box backgrounf light colour       light-gray              #656D78
           <div class="form-group pull-right" style="display:inline; ">
             <div class="form-group">
               <label for="usr">Time:</label>
-              <input type="text" placeholder="Hour" class="form-control" id="hour" style="width:80px;">
-              <input type="text" placeholder="Minute" class="form-control" id="minute" style="width:80px;">
+              <input class="blue-form" type="text" placeholder="Hour"  id="hour" style="width:80px;">
+              <input class="blue-form" type="text" placeholder="Minute"  id="minute" style="width:80px;">
             </div>
             <div class="form-group" style="padding-left:20px;">
               <label for="usr">Date:</label>
-              <input type="text" placeholder="Day" class="form-control" id="day" style="width:80px;">
-              <input type="text" placeholder="Month" class="form-control" id="month" style="width:80px;">
-              <input type="text" placeholder="Year" class="form-control" id="year" style="width:80px;">
+              <input class="blue-form" type="text" placeholder="Day"  id="day" style="width:80px;">
+              <input class="blue-form" type="text" placeholder="Month"  id="month" style="width:80px;">
+              <input class="blue-form" type="text" placeholder="Year" id="year" style="width:80px;">
             </div>
             <div class="input-group" style="padding-left:20px;">
-              <input type="text" style="width:250px;" class="form-control" placeholder="What are you searching for?">
+              <input class="blue-form" type="text" style="width:250px;"  placeholder="What are you searching for?">
               <span class="input-group-addon"><span class="glyphicon glyphicon-search"><a href=""></a></span> </span>
             </div>
           </div>
