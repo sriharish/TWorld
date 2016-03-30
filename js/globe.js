@@ -1,21 +1,22 @@
 //Control visibility of member functions with closure
 //Globe Renderer
 (function() {
-    
+
     //Set Scene
         var scene = new THREE.Scene();
 
         //Set Camera
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 100);
+        var camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 1, 100);
         camera.position.z = 10;
 
 
         //Configure Render
         var renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0xd1dbe3);
-        document.body.appendChild(renderer.domElement);
+        renderer.setSize(window.innerWidth*(.75), window.innerHeight*(.75));
+        renderer.setClearColor(0x2d3238);
+        var globe = document.getElementById('globe');
+        globe.appendChild(renderer.domElement);
 
 
         //Configure Sphere
@@ -36,11 +37,11 @@
 
         function render() {
             requestAnimationFrame(render);
-            
+
             sphere.rotation.y += 0.0001;
             renderer.render(scene, camera);
         }
         render();
-    
-    
+
+
 })();

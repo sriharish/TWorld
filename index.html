@@ -3,32 +3,166 @@
 <head>
     <title>T-World</title>
 	<meta charset="utf-8" />
-        
-    <!--Styles (CDN)-->    
+
+    <!--Styles (CDN)-->
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+
+
     <!--Styles (Author)-->
     <link href="css/appStyle.css" rel="stylesheet">
     <link href="css/canvasStyle.css" rel="stylesheet">
-    
+    <link href="css/styles.css" rel="stylesheet">
+
     <!--Scripts (Critical Dependencies)-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/threejs/r73/three.min.js"></script>
-    
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <style>
+    /*  ******************** Colour reference chart****************
+           *************************** comment ********* colour ********
+
+box navbar colour                 dark-blue               #4A89DC
+box navbar light colour           light-blue              #5D9CEC
+box background colour             dark-gray               #434A54
+box backgrounf light colour       light-gray              #656D78
+
+*/
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    color: #ffffff;
+    margin-bottom: -1px;
+    background-color: #434A54;
+    border: 1px solid #2d3238;
+}
+
+.list-group-item:hover {
+    background-color: #2d3238;
+}
+
+.list-group-item:active {
+    background-color: #2d3238;
+}
+
+.custom-link, .custom-link:hover, .custom-link:active{
+    color:#ccc;
+    font-size:17px;
+    text-decoration: none;
+    padding: 5px 30px 5px 10px;
+    display: block;
+    !important;
+}
+
+
+.simplepadding{
+  padding-top:20px;
+  padding-right:30px;
+  padding-left:30px;
+}
+
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+</style>
+
+
+
 </head>
 <body>
-    
+
+
+  <!-- begin template -->
+  <div class="navbar navbar-custom navbar-fixed-top">
+   <div class="navbar-header"><a class="navbar-brand" href="#"><b style="font-size:25px;">T-World</b></a>
+        <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">All</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li>&nbsp;</li>
+        </ul>
+        <form class="navbar-form">
+          <div class="form-group pull-right" style="display:inline; ">
+            <div class="form-group">
+              <label for="usr">Time:</label>
+              <input type="text" placeholder="Hour" class="form-control" id="hour" style="width:80px;">
+              <input type="text" placeholder="Minute" class="form-control" id="minute" style="width:80px;">
+            </div>
+            <div class="form-group" style="padding-left:20px;">
+              <label for="usr">Date:</label>
+              <input type="text" placeholder="Day" class="form-control" id="day" style="width:80px;">
+              <input type="text" placeholder="Month" class="form-control" id="month" style="width:80px;">
+              <input type="text" placeholder="Year" class="form-control" id="year" style="width:80px;">
+            </div>
+            <div class="input-group" style="padding-left:20px;">
+              <input type="text" style="width:250px;" class="form-control" placeholder="What are you searching for?">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-search"><a href=""></a></span> </span>
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+
+  <div id="map-canvas"></div>
+  <div class="container-fluid" id="main">
+    <div class="row">
+    	<div class="col-xs-2 nopadding" style="background-color:#434A54; border-right: 1px solid; border-right-color: black;" id="left">
+
+
+        <h2 class="simplepadding" style=" color:#ffffff;">Top 10 Hashtags</h2>
+
+        <p class="simplepadding" style="color:#ccc; font-size:18px;">The following are the ten most popular hashtags found given your query result</p>
+        </br>
+        <ul class="list-group" style="width:80%; margin:auto;">
+          <li class="list-group-item"><a class="custom-link" href="#">01 - #Trump</a></li>
+          <li class="list-group-item"><a class="custom-link" href="#">02 - #Trump</a></li>
+          <li class="list-group-item"><a class="custom-link" href="#">03 - #Trump</a></li>
+          <li class="list-group-item"><a class="custom-link" href="#">04 - #Trump</a></li>
+          <li class="list-group-item"><a class="custom-link" href="#">05 - #Trump</a></li>
+          <li class="list-group-item"><a class="custom-link" href="#">06 - #Trump</a></li>
+          <li class="list-group-item"><a class="custom-link" href="#">07 - #Trump</a></li>
+          <li class="list-group-item"><a class="custom-link" href="#">08 - #Trump</a></li>
+          <li class="list-group-item"><a class="custom-link" href="#">09 - #Trump</a></li>
+          <li class="list-group-item"><a class="custom-link" href="#">10 - #Trump</a></li>
+
+        </ul>
+      </div>
+
+      <div id="globe" style="background-color:#2d3238; height:100%; padding-top:100px;"  class="col-xs-10"></div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- end template -->
+
+
     <!--Scripts (CDN)-->
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-messages.min.js"></script>
-    
+
     <!--Scripts (Author)-->
     <script src="js/globe.js"></script>
-    
+
+
+
 </body>
 </html>
