@@ -13,37 +13,50 @@ $( document ).ready(function() {
 		height = window.innerHeight;
 
     // Earth params
-    var radius = 0.5,
+    var radius = 2.5,
 		segments = 32,
-		rotation = 6;
+		rotation = 23.5;
 
 
     var scene = new THREE.Scene();
 
     var camera = new THREE.PerspectiveCamera(65, width / height, 0.01, 100);
     camera.position.z = 10;
-
+    camera.minPolarAngle = (3*Math.PI)/2
+    camera.maxPolarAngle = Math.PI/2; // radians
+    
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth * (.75), window.innerHeight * (.75));
 
     scene.add(new THREE.AmbientLight(0x333333));
-
-    //var light = new THREE.DirectionalLight(0xffffff, 1);
-    //light.position.set(5, 3, 5);
-    //scene.add(light);
-
+    //general directional lights
+    var light1 = new THREE.DirectionalLight(0xffffff, 0.25);
+    light1.position.set(10, 3, 10);
+    scene.add(light1);
+    
+    var light2 = new THREE.DirectionalLight(0xffffff, 0.25);
+    light2.position.set(-10,3,10);
+    scene.add(light2);
+    
+    var light3 = new THREE.DirectionalLight(0xffffff, 0.25);
+    light3.position.set(-10,3,-10);
+    scene.add(light3);
+    
+    var light4 = new THREE.DirectionalLight(0xffffff, 0.25);
+    light4.position.set(10, 3, 10);
+    scene.add(light4);
+    
     var sphere = createSphere(radius, segments);
     sphere.rotation.y = rotation;
+    sphere.rotation.x = rotation;
     scene.add(sphere)
 
-    //var clouds = createClouds(radius, segments);
-    //clouds.rotation.y = rotation;
-    //scene.add(clouds)
-
-    //var stars = createStars(90, 64);
-    //scene.add(stars);
-
     var controls = new THREE.TrackballControls(camera);
+    //to limit rotation of the earth and add controls to object view.
+    controls.target.set(0,0,0);
+    controls.minDistance = 3.0;
+    controls.maxDistance = 10;
+    
 
     webglEl.appendChild(renderer.domElement);
 
@@ -53,8 +66,7 @@ $( document ).ready(function() {
 
     function render() {
         controls.update();
-        //sphere.rotation.y += 0.0005;
-        //clouds.rotation.y += 0.0005;
+        sphere.rotation.y += 0.0005;
         requestAnimationFrame(render);
         renderer.render(scene, camera);
     }
