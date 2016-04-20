@@ -107,7 +107,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 			( _this.screen.height * 0.5 + _this.screen.offsetTop - clientY ) / _this.radius,
 			0.0
 		);
-
+                
 		var length = mouseOnBall.length();
 
 		if ( length > 1.0 ) {
