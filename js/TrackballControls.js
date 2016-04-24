@@ -322,11 +322,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 			_state = STATE.ZOOM;
 
-		} else if ( event.keyCode === _this.keys[ STATE.PAN ] && !_this.noPan ) {
-
-			_state = STATE.PAN;
-
-		}
+		} 
 
 	}
 
@@ -361,11 +357,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 			_zoomStart = _zoomEnd = _this.getMouseOnScreen( event.clientX, event.clientY );
 
-		} else if ( _state === STATE.PAN && !_this.noPan ) {
-
-			_panStart = _panEnd = _this.getMouseOnScreen( event.clientX, event.clientY );
-
-		}
+		} 
 
 		document.addEventListener( 'mousemove', mousemove, false );
 		document.addEventListener( 'mouseup', mouseup, false );
@@ -387,13 +379,10 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 			_zoomEnd = _this.getMouseOnScreen( event.clientX, event.clientY );
 
-		} else if ( _state === STATE.PAN && !_this.noPan ) {
-
-			_panEnd = _this.getMouseOnScreen( event.clientX, event.clientY );
-
 		}
-
+                
 	}
+        
 
 	function mouseup( event ) {
 
