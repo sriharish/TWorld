@@ -1,27 +1,70 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<?php
+    session_start();
+
+	require_once("autoload.php");
+	// use Abraham\TwitterOAuth\TwitterOAuth;
+	require_once('src/TwitterOAuth.php');
+	use Abraham\TwitterOAuth\TwitterOAuth;
+
+	$apikey = "oTk1GPfPsepAvcRkTITqwi4fd";
+	$apisecret = "WMYmOzRbLcfW5lPbuFwQtoKqyWkubsKYUDhsgnpTDqe9Zq5u04";
+	$accesstoken = "357659837-4NI7LhZr76ybwvw4HhG0ZwcofroXEZIG2k06QkAi";
+	$accesssecret = "oKTzLO6iGHOR1PNwD56tgLhB7zUEaU0bSRDFSEHYEYF9F";
+
+	$connection = new TwitterOAuth($apikey, $apisecret, $accesstoken, $accesssecret);
+   
+	if($lat>0 && $long>0 && $dist>0)
+		$geo = ''+$lat+','+$long+','+$dist+'';
+		$results = $connection->get("search/tweets", ["q" => $query, "count" => $count, "geocode" => $geo]);
+	else
+		$results = $connection->get("search/tweets", ["q" => $query, "count" => $count]);
+
+	// return json_encode($results);
+	// $i = 1;
+	// // $resultlist = $results.statuses; //gets an array of statuses returned
+	print_r($results);
+	// foreach ($results as $result) //goes through each status
+	// {
+	// 	foreach($result as $tweet)	//goes through each componenet of the status and spits out relevant info
+	// 	{
+	// 		echo $i;
+	// 		echo ". ";
+	// 		echo $tweet->text;
+	// 		// echo " by ";
+	// 		// echo $tweet->users->screen_name;
+	// 		echo "<br>";
+	// 		$i++;
+	// 	}
+	// 	if ($i > 100){
+	// 		break;
+	// 	}
+	// }
+
+	}
+?>
+
+
+<!DOCTYPE html>
+<html ng-app="tWorld">
 <head>
     <title>T-World</title>
 	<meta charset="utf-8" />
 
     <!--Styles (CDN)-->
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
     <!--Styles (Author)-->
-    <link href="css/canvasStyle.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 
     <!--Scripts (Critical Dependencies)-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/threejs/r73/three.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="js/Detector.js"></script>
-    <script src="js/TrackballControls.js"></script>
-    <!--<script src="js/globe.js"></script>-->
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA6_u0eLSwz39Nwu3OWPwI5EF4JSQs42B0"></script>
+    <script src="js/globe.js"></script>
+    
 
     <style>
     /*  ******************** Colour reference chart****************
@@ -34,77 +77,12 @@ box backgrounf light colour       light-gray              #656D78
 
 */
 
-.list-group-item {
-    position: relative;
-    display: block;
-    padding: 10px 15px;
-    color: #ffffff;
-    margin-bottom: -1px;
-    background-color: #434A54;
-    border: 1px solid #2d3238;
-}
-
-.list-group-item:hover {
-    background-color: #2d3238;
-}
-
-.list-group-item:active {
-    background-color: #2d3238;
-}
-
-.custom-link, .custom-link:hover, .custom-link:active{
-    color:#ccc;
-    font-size:17px;
-    text-decoration: none;
-    padding: 0px 30px 0px 10px;
-    display: block;
-    !important;
-}
-
-
-.blue-form{
-    width: 100%;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #ffffff;
-    background-color: #116b9c;
-    background-image: none;
-    border: 1px solid #116b9c;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-}
-
-
-.simplepadding{
-  padding-top:5px;
-  padding-right:30px;
-  padding-left:30px;
-}
-
-.btn-white {
-    color: #168ccc;
-    background-color: #eee;
-    border-color: #ccc;
-}
-
-
-.nopadding {
-   padding: 0 !important;
-   margin: 0 !important;
-}
-
 </style>
 
 
 
 </head>
-<body>
+<body ng-controller="mainCtrl">
 
 
   <!-- begin template -->
@@ -138,9 +116,8 @@ box backgrounf light colour       light-gray              #656D78
               <input class="blue-form" type="text" placeholder="Year" id="year" style="width:80px;">
             </div>
             <div class="input-group" style="padding-left:20px;">
-              <input class="blue-form" type="text" style="width:250px;"  placeholder="What are you searching for?">
-              <button type="submit" class="btn btn-white"><span class="glyphicon glyphicon-search"><a href=""></a></span></button>
-              
+              <input ng-model="searchTrend" class="blue-form" type="text" style="width:250px;" placeholder="What are you searching for?">
+              <a ng-click="search(searchTrend)" class="input-group-addon"><i class="material-icons centerIcon">search</i></a>
             </div>
           </div>
         </form>
@@ -156,7 +133,7 @@ box backgrounf light colour       light-gray              #656D78
         <h2 class="simplepadding" style="color:#ffffff;">Top 10 Hashtags</h2>
 
         <p class="simplepadding" style="color:#ccc; font-size:13px;">The following are the ten most popular hashtags found given your query result</p>
-        </br>
+        <br>
         <ul class="list-group" style="width:85%; margin:auto;">
           <li class="list-group-item"><a class="custom-link" href="#">01 - #Trump</a></li>
           <li class="list-group-item"><a class="custom-link" href="#">02 - #Trump</a></li>
@@ -172,7 +149,7 @@ box backgrounf light colour       light-gray              #656D78
         </ul>
       </div>
 
-      <div id="globe" style="background-color:#2d3238; height:100%; padding-top:70px;"  class="col-xs-9"></div>
+      <div id="mapContainer"  class="col-xs-9"></div>
 
 
       </div>
@@ -180,18 +157,14 @@ box backgrounf light colour       light-gray              #656D78
   
 
   <!-- end template -->
-  <script type="text/javascript">
 
-  </script>
 
     <!--Scripts (CDN)-->
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-messages.min.js"></script>
 
-    <!--Scripts (Author)-->
-   
+    
 
 </body>
 </html>

@@ -1,96 +1,74 @@
 //Control visibility of member functions with closure
 //Globe Renderer
-$( document ).ready(function() {
 
-    var webglEl = document.getElementById('globe');
+var tWorld = angular.module('tWorld', []);
 
-    if (!Detector.webgl) {
-        Detector.addGetWebGLMessage(webglEl);
-        return;
+tWorld.controller('mainCtrl', ['$scope', '$window', '$http', function ($scope, $window, $http) {
+
+    //Google Maps API calls
+    //Will only be called once on page load so doesn't need to be in $scope
+
+    var MAX_TWEETS = 10;
+    $scope.searchTrend = '';
+	$scope.lastClickedLoc;
+	
+    var tWorldStyle = [
+    {
+        featureType: "administrative.country",
+        elementType: "labels",
+        stylers: [
+            { visibility: "off" }
+        ]
+    }];
+
+    var map = new google.maps.Map(document.getElementById('mapContainer'), {
+        //College Station
+        center: {
+            lat: 30.6280,
+            lng: -96.3344
+        },
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoom: 5,
+        styles: tWorldStyle
+    });
+
+  
+
+    function placeMarker(location) {
+
+        var tweetTemplate = "";
+        for (var i = 0; i < MAX_TWEETS; i++) {
+            var user = "User" + i;
+            var status = "Bitch bitch bitch bitch" + i;
+            var tweet = "<div><blockquote class='twitter-tweet'><p>" + status + "</p>-" + user + "</blockquote></div>";
+            tweetTemplate += tweet;
+        }
+        
+
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: tweetTemplate
+        });
+        infowindow.open(map, marker);
     }
 
-    var width = window.innerWidth,
-		height = window.innerHeight;
+    google.maps.event.addDomListener(map, 'click', function (event) {
+		$scope.lastClickedLoc = event.latLng;
+        placeMarker(event.latLng);
+    });
+    //end of google maps api calls
 
-    // Earth params
-    var radius = 0.5,
-		segments = 32,
-		rotation = 6;
-
-
-    var scene = new THREE.Scene();
-
-    var camera = new THREE.PerspectiveCamera(65, width / height, 0.01, 100);
-    camera.position.z = 10;
-
-    var renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth * (.75), window.innerHeight * (.75));
-
-    scene.add(new THREE.AmbientLight(0x333333));
-
-    //var light = new THREE.DirectionalLight(0xffffff, 1);
-    //light.position.set(5, 3, 5);
-    //scene.add(light);
-
-    var sphere = createSphere(radius, segments);
-    sphere.rotation.y = rotation;
-    scene.add(sphere)
-
-    //var clouds = createClouds(radius, segments);
-    //clouds.rotation.y = rotation;
-    //scene.add(clouds)
-
-    //var stars = createStars(90, 64);
-    //scene.add(stars);
-
-    var controls = new THREE.TrackballControls(camera);
-
-    webglEl.appendChild(renderer.domElement);
-
-    render();
-
-    THREE.ImageUtils.crossOrigin = '';
-
-    function render() {
-        controls.update();
-        //sphere.rotation.y += 0.0005;
-        //clouds.rotation.y += 0.0005;
-        requestAnimationFrame(render);
-        renderer.render(scene, camera);
+    $scope.search = function (trend) {
+        console.log(trend);
     }
 
-    function createSphere(radius, segments) {
-        return new THREE.Mesh(
-			new THREE.SphereGeometry(radius, segments, segments),
-			new THREE.MeshPhongMaterial({
-			    map: THREE.ImageUtils.loadTexture('./images/2_no_clouds_4k.jpg'),
-			    //bumpMap: THREE.ImageUtils.loadTexture('./images/elev_bump_4k.jpg'),
-			    //bumpScale: 0.005,
-			    //specularMap: THREE.ImageUtils.loadTexture('./images/water_4k.png'),
-			    specular: new THREE.Color('grey')
-			})
-		);
-    }
-    /*
-    function createClouds(radius, segments) {
-        return new THREE.Mesh(
-			new THREE.SphereGeometry(radius + 0.003, segments, segments),
-			new THREE.MeshPhongMaterial({
-			    map: THREE.ImageUtils.loadTexture('./images/fair_clouds_4k.png'),
-			    transparent: true
-			})
-		);
-    }*/
-    /*
-    function createStars(radius, segments) {
-        return new THREE.Mesh(
-			new THREE.SphereGeometry(radius, segments, segments),
-			new THREE.MeshBasicMaterial({
-			    map: THREE.ImageUtils.loadTexture('./images/galaxy_starfield.png'),
-			    side: THREE.BackSide
-			})
-		);
-    }*/
+
+}]);
 
 
-});
+
+
+   
