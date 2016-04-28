@@ -1,0 +1,278 @@
+<?php
+
+	// session_start();
+
+	require_once("autoload.php");
+	require_once('src/TwitterOAuth.php');
+	use Abraham\TwitterOAuth\TwitterOAuth;
+
+
+
+	function searchUser($query){
+
+		$apikey = "oTk1GPfPsepAvcRkTITqwi4fd";
+		$apisecret = "WMYmOzRbLcfW5lPbuFwQtoKqyWkubsKYUDhsgnpTDqe9Zq5u04";
+		$accesstoken = "357659837-4NI7LhZr76ybwvw4HhG0ZwcofroXEZIG2k06QkAi";
+		$accesssecret = "oKTzLO6iGHOR1PNwD56tgLhB7zUEaU0bSRDFSEHYEYF9F";
+
+		$connection = new TwitterOAuth($apikey, $apisecret, $accesstoken, $accesssecret);
+
+		echo "User Search Results";
+		echo "<br><br>";
+
+		$results = $connection->get("users/search" , ['q' => $query, "count" => "100"]);
+		// return json_encode($results);
+
+		$i = 1;
+		$output = array();
+		// print_r($results);
+		foreach ($results as $result) //goes through each result
+		{
+		 	echo $i;
+			echo ". ";
+			echo $result->screen_name;
+			echo "<br>";
+		// 	// echo $result->status->text;
+			$i++;
+		}
+	}
+
+	function tweetsbyUser($screen_name, $count)
+	{
+
+		$apikey = "oTk1GPfPsepAvcRkTITqwi4fd";
+		$apisecret = "WMYmOzRbLcfW5lPbuFwQtoKqyWkubsKYUDhsgnpTDqe9Zq5u04";
+		$accesstoken = "357659837-4NI7LhZr76ybwvw4HhG0ZwcofroXEZIG2k06QkAi";
+		$accesssecret = "oKTzLO6iGHOR1PNwD56tgLhB7zUEaU0bSRDFSEHYEYF9F";
+
+
+
+		$connection = new TwitterOAuth($apikey, $apisecret, $accesstoken, $accesssecret);
+		
+		// $tweets = $connection->get('statuses/user_timeline', array('screen_name' => $screen_name, 'count' => $count));
+		$tweets = $connection->get("statuses/home_timeline", ['screen_name' => $screen_name, 'count' => $count]);
+		// return json_encode($tweets);
+		//print_r($tweets); prints objects
+		echo "Latest 10 tweets by " + $screen_name;
+		echo "<br>";
+		echo "<br>";
+		$i = 1;
+		foreach ($tweets as $tweet){
+			echo $i;
+			echo ". ";
+			echo $tweet->text;
+			echo "<br>";
+			$i++;
+
+			if($i>=$count)
+				break;
+		}
+	}
+
+?>
+
+<!-- <div class="col-xs-3 nopadding" style="background-color: grey; border-right: 1px solid; border-right-color: black;" id="left">
+
+
+        <h2 class="simplepadding" style="color:#ffffff;">Top 10 Hashtags</h2>
+
+     	<?php 
+
+     		// searchUser("Ndinani_8965");
+     		// tweetsbyUser("techedrob","10");
+
+		?>
+      </div> -->
+
+<head>
+    <title>T-World</title>
+	<meta charset="utf-8" />
+
+    <!--Styles (CDN)-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <!--Styles (Author)-->
+    <link href="css/canvasStyle.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!--Scripts (Critical Dependencies)-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/threejs/r73/three.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="js/Detector.js"></script>
+    <script src="js/TrackballControls.js"></script>
+    <script src="js/globe.js"></script>
+
+    <style>
+    /*  ******************** Colour reference chart****************
+           *************************** comment ********* colour ********
+
+box navbar colour                 dark-blue               #4A89DC
+box navbar light colour           light-blue              #5D9CEC
+box background colour             dark-gray               #434A54
+box backgrounf light colour       light-gray              #656D78
+
+*/
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    color: #ffffff;
+    margin-bottom: -1px;
+    background-color: #434A54;
+    border: 1px solid #2d3238;
+}
+
+.list-group-item:hover {
+    background-color: #2d3238;
+}
+
+.list-group-item:active {
+    background-color: #2d3238;
+}
+
+.custom-link, .custom-link:hover, .custom-link:active{
+    color:#ccc;
+    font-size:17px;
+    text-decoration: none;
+    padding: 0px 30px 0px 10px;
+    display: block;
+    !important;
+}
+
+
+.blue-form{
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #ffffff;
+    background-color: #116b9c;
+    background-image: none;
+    border: 1px solid #116b9c;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+
+.simplepadding{
+  padding-top:5px;
+  padding-right:30px;
+  padding-left:30px;
+}
+
+
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+</style>
+
+
+
+</head>
+<body>
+
+
+  <!-- begin template -->
+  <div class="navbar navbar-custom navbar-fixed-top">
+   <div class="navbar-header"><a class="navbar-brand" href="#"><b style="font-size:25px;">T-World</b></a>
+        <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">All</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li>&nbsp;</li>
+        </ul>
+        <form class="navbar-form">
+          <div class="form-group pull-right" style="display:inline; ">
+            <div class="form-group">
+              <label for="usr">Time:</label>
+              <input class="blue-form" type="text" placeholder="Hour"  id="hour" style="width:80px;">
+              <input class="blue-form" type="text" placeholder="Minute"  id="minute" style="width:80px;">
+            </div>
+            <div class="form-group" style="padding-left:20px;">
+              <label for="usr">Date:</label>
+              <input class="blue-form" type="text" placeholder="Day"  id="day" style="width:80px;">
+              <input class="blue-form" type="text" placeholder="Month"  id="month" style="width:80px;">
+              <input class="blue-form" type="text" placeholder="Year" id="year" style="width:80px;">
+            </div>
+            <div class="input-group" style="padding-left:20px;">
+              <input class="blue-form" type="text" style="width:250px;"  placeholder="What are you searching for?">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-search"><a href=""></a></span> </span>
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+
+  <div id="map-canvas"></div>
+  <div class="container-fluid" id="main">
+    <div class="row">
+    	<div class="col-xs-3 nopadding" style="background-color:white; border-right: 1px solid; border-right-color: black;" id="left">
+
+
+       <!--  <h2 class="simplepadding" style="color:#ffffff;">Top 10 Hashtags</h2>
+
+    	<?php 
+     		// searchUser("Ndinani_8965");
+     		// tweetsbyUser("techedrob","10");
+		?>
+     -->
+
+		<h2 class="simplepadding" align="center" style="color: black; padding-top: 250; ">Select a Country to display top 10 tweets</h2>
+
+
+		<!-- <form  method="get" action="http://www.google.com">
+		    <input type="text" class="tftextinput" name="q" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
+		</form> -->
+
+    <a href="#" onclick="doSomething();">Click Me!</a>
+
+      </div>
+
+      
+
+
+    </div>
+  </div>
+  
+
+  <!-- end template -->
+
+
+    <!--Scripts (CDN)-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-messages.min.js"></script>
+
+    <!--Scripts (Author)-->
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript">
+		  function doSomething() {
+          $.get("nabir.php");
+          return false;
+      }
+    </script>
+   
+
+</body>
